@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Employee Records{% endblock %}</title>
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">EmployeeDB</a>
+    <div class="ml-auto">
+      <a class="btn btn-success" href="{% url 'record_create' %}">New Record</a>
+      {% if user.is_authenticated %}
+        <span class="navbar-text ml-3">Logged in as {{ user.username }}</span>
+        <a class="btn btn-outline-light ml-2" href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a class="btn btn-outline-light ml-2" href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </div>
+  </nav>
+  <div class="container my-4">
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer class="text-center text-muted my-4">
+    Done by Eng. Rama Alkhobbi
+  </footer>
+</body>
+</html>

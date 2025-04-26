@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}My Records{% endblock %}
+{% block content %}
+<form method="get" class="form-inline mb-4">
+  <!-- File # -->
+  <div class="form-group mr-2">
+    <label for="id_file" class="mr-1">File #</label>
+    <input
+      type="number"
+      id="id_file"
+      name="file"
+      value="{{ file }}"
+      class="form-control"
+      placeholder="File #"
+    >
+  </div>
+
+  <!-- Place -->
+  <div class="form-group mr-2">
+    <label for="id_place" class="mr-1">Place</label>
+    <input
+      type="text"
+      id="id_place"
+      name="place"
+      value="{{ place }}"
+      class="form-control"
+      placeholder="Service place"
+    >
+  </div>
+
+  <!-- Insurance -->
+  <div class="form-group mr-2">
+    <label for="id_insurance" class="mr-1">Insurance</label>
+    <select id="id_insurance" name="insurance" class="form-control">
+      <option value="" {% if not insurance %}selected{% endif %}>All</option>
+      <option value="Thiqa"    {% if insurance == "Thiqa"    %}selected{% endif %}>Thiqa</option>
+      <option value="Enhanced" {% if insurance == "Enhanced" %}selected{% endif %}>Enhanced</option>
+      <option value="Cash"     {% if insurance == "Cash"     %}selected{% endif %}>Cash</option>
+      <option value="Free"     {% if insurance == "Free"     %}selected{% endif %}>Free</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary mr-2">Filter</button>
+  <a href="{% url 'record_list' %}" class="btn btn-secondary">Clear</a>
+</form>
+
+  <div class="table-responsive shadow-sm">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>File</th>
+          <th>Date</th>
+          <th>Duration</th>
+          <th>Session?</th>
+          <th>Patient</th>
+          <th>Service</th>
+          <th>Insurance</th>
+          <th>Remarks</th>
+          <th>Therapist</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td>{{ r.payment_type.file.number }}</td>
+          <td>{{ r.date|date:"Y-m-d H:i" }}</td>
+          <td>{{ r.duration_minutes }}</td>
+          <td>{{ r.is_session|yesno:"Yes,No" }}</td>
+          <td>{{ r.patient_name }}</td>
+          <td>{{ r.payment_type.service_type }}</td>
+          <td>{{ r.payment_type.insurance }}</td>
+          <td>{{ r.remarks|default:"—" }}</td>
+          <td>{{ r.created_by.first_name }} {{ r.created_by.last_name }}</td>
+          <td>
+            {% if r.pk in editable_pks %}
+              <a href="{% url 'record_edit' r.pk %}"
+                 class="btn btn-sm btn-outline-primary">Edit</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="10" class="text-center">No records yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

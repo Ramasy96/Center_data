@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if form.instance.pk %}Edit{% else %}New{% endif %} Record
+{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{% if form.instance.pk %}Edit{% else %}New{% endif %} Record</h2>
+  <form method="post" id="record-form" novalidate>
+    {% csrf_token %}
+
+    <!-- STEP 1: File Number -->
+    <div id="step-file">
+      <div class="form-group col-md-3 p-0">
+        <label for="id_file_number">File Number</label>
+        <input type="number" id="id_file_number" class="form-control" placeholder="Enter file number">
+      </div>
+      <button type="button" id="btn-load-services" class="btn btn-primary mt-2">
+        Load Services
+      </button>
+      <div id="file-error" class="text-danger mt-2" style="display:none;">
+        No such File number.
+      </div>
+    </div>
+
+    <!-- STEP 2: rest of form, hidden until payment_types loaded -->
+    <div id="step-form-fields" style="display:none; margin-top:1rem;">
+      <div class="form-group">
+        <label for="id_payment_type">Payment (File • Ins./Service • Remaining)</label>
+        <select name="payment_type" id="id_payment_type" class="form-control"></select>
+      </div>
+
+      <div class="form-check mb-3">
+        {{ form.is_session }}
+        {{ form.is_session.label_tag }}
+      </div>
+
+      <div class="form-group">
+        {{ form.location.label_tag }}
+        {{ form.location }}
+      </div>
+
+      <div class="form-group">
+        {{ form.patient_name.label_tag }}
+        {{ form.patient_name }}
+      </div>
+
+      <div class="form-group">
+        {{ form.duration_minutes.label_tag }}
+        {{ form.duration_minutes }}
+      </div>
+
+      <div class="form-group">
+        {{ form.remarks.label_tag }}
+        {{ form.remarks }}
+      </div>
+
+      <button type="submit" class="btn btn-success">Save</button>
+      <a href="{% url 'record_list' %}" class="btn btn-secondary ml-2">Cancel</a>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('btn-load-services').onclick = function() {
+      const fileNum = document.getElementById('id_file_number').value;
+      const errorDiv = document.getElementById('file-error');
+      fetch(`/ajax/payment-types/?file_number=${fileNum}`)
+        .then(resp => resp.json())
+        .then(data => {
+          const sel = document.getElementById('id_payment_type');
+          sel.innerHTML = '';
+          if (!data.payment_types.length) {
+            errorDiv.style.display = 'block';
+            return;
+          }
+          errorDiv.style.display = 'none';
+          data.payment_types.forEach(pt => {
+            const opt = document.createElement('option');
+            opt.value = pt.id;
+            opt.text = pt.label;
+            sel.appendChild(opt);
+          });
+          document.getElementById('step-file').style.display = 'none';
+          document.getElementById('step-form-fields').style.display = 'block';
+        });
+    };
+  </script>
+{% endblock %}
