@@ -4,13 +4,21 @@
 A simple Django application for managing patient session records, with Excel import and ngrok exposure. These instructions assume **Windows** and no virtual‐environment steps.
 
 ---
+🌐 Live App
+The application is now live and can be accessed via:
+🔗 https://alpinecaresession.ae/login/?next=/
+
+©️ Copyright
+© 2025 Developed by Ramasy96. All rights reserved.
+
+---
 
 ## 1. Download & Install
 
 1. **Download the repository**  
 
      ```powershell
-     git clone https://github.com/AlyaF3i/center_data_entry.git
+     git clone https://github.com/Ramasy96/center_data_entry.git
      cd center_data_entry
      ```
 
