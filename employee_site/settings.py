@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-7)k0p(a1iz&50+x2$%9l_zn223gw1!vp@jk0-ad_m8pcctz-gb
 DEBUG = True
 
 ALLOWED_HOSTS = []
-DOMAIN = "7393-2001-8f8-1c3b-1260-1caf-2afb-931c-818c.ngrok-free.app"
+DOMAIN = "7fb3-2001-8f8-1577-7d-b172-c1e0-32cc-95be.ngrok-free.app"
 ALLOWED_HOSTS = [DOMAIN, "localhost", "127.0.0.1"]
 # CSRF_TRUSTED_ORIGINS = [f"http://{a}/" for a in ALLOWED_HOSTS] + [f"https://{a}/" for a in ALLOWED_HOSTS]
 CSRF_TRUSTED_ORIGINS = [f"https://{DOMAIN}"]

@@ -71,7 +71,7 @@ Follow the prompts to set username, email, and password.
 Use the management command to load your Excel sheet:
 
 ```powershell
-python manage.py import_sheet "C:\Users\user\Desktop\ram_help\DAILY ACTIVE PED.xlsx" "Sheet1"
+python manage.py import_sheet "C:\Users\acer\Desktop\ALPINE DAILY ACTIVE PED.xlsx" "ACTIVEPED"
 ```
 
 This will:
@@ -106,7 +106,7 @@ Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 3. **Copy** the forwarding URL that ngrok prints, e.g.:  
    ```
-   Forwarding                    https://7393-2001-8f8-1c3b-1260-1caf-2afb-931c-818c.ngrok-free.app -> localhost:8000
+   Forwarding                    https://7fb3-2001-8f8-1577-7d-b172-c1e0-32cc-95be.ngrok-free.app -> localhost:8000
    ```
 
 4. **Update** `DOMAIN` in `settings.py` with that host (see Step 2), then **restart** the Django server.
